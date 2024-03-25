@@ -1,0 +1,1621 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta id="viewport" content="width=device-width, initial-scale=1.0">
+<title>Responsive Weekly Calendar</title>
+<style>
+  :root {
+
+  }
+  a {
+    text-decoration : none;
+  }
+  button:hover {
+    background-color: blue;
+  }
+  button.sabato ctive {
+    background-color: violet;
+  }
+  body {
+    background-color: lightblue;
+  }
+  .calendar {
+    position : absolute;
+    left : 50%;
+    top : 0;
+    transform: translate(-50%, 0);
+    background-color: lightpink;
+    display : flex;
+    flex-direction: column;
+    widht : 70vw;
+  }
+  #sidebar {
+    position: fixed;
+    left: 0;
+    height : 100vh;
+    background-color: lightyellow;
+    width : 25vw;
+    display : flex;
+    flex-direction: column;
+  }
+  .monthButton:hover{
+    background-color: red;
+  }
+  .monthButton:active{
+    background-color: black;
+    color: white;
+  }
+  .monthButton {
+    border: none;
+    background-color: lightgoldenrodyellow;
+    color: black;
+    width : fill;
+    padding : 20px;
+    margin-bottom: 30px;
+  }
+.day-of-week{
+  display: flex;
+  flex-direction: row;
+}
+.day-of-week div {
+  padding-left : 30px;
+  padding-right: 30px;
+}
+.date-grid {
+  display: grid;
+  grid-template-columns: repeat(7, auto);
+}
+
+
+.lunedi .date-grid button:nth-child(7n -6) {
+  grid-column: 1;
+}
+.lunedi .date-grid button:nth-child(7n -5) {
+  grid-column: 2 ;
+}
+.lunedi .date-grid button:nth-child(7n -4) {
+  grid-column: 3;
+}
+.lunedi .date-grid button:nth-child(7n -3) {
+  grid-column: 4;
+}
+.lunedi .date-grid button:nth-child(7n -2) {
+  grid-column: 5;
+}
+.lunedi .date-grid button:nth-child(7n -1) {
+  grid-column: 6;
+}
+.lunedi .date-grid button:nth-child(7n) {
+  grid-column: 7;
+}
+
+
+.martedi .date-grid button:nth-child(7n -6) {
+  grid-column: 2;
+}
+.martedi .date-grid button:nth-child(7n -5) {
+  grid-column: 3 ;
+}
+.martedi .date-grid button:nth-child(7n -4) {
+  grid-column: 4;
+}
+.martedi .date-grid button:nth-child(7n -3) {
+  grid-column: 5;
+}
+.martedi .date-grid button:nth-child(7n -2) {
+  grid-column: 6;
+}
+.martedi .date-grid button:nth-child(7n -1) {
+  grid-column: 7;
+}
+.martedi .date-grid button:nth-child(7n) {
+  grid-column: 1;
+}
+
+
+.mercoledi .date-grid button:nth-child(7n-6) {
+  grid-column: 3;
+}
+.mercoledi .date-grid button:nth-child(7n-5) {
+  grid-column: 4 ;
+}
+.mercoledi .date-grid button:nth-child(7n-4) {
+  grid-column: 5;
+}
+.mercoledi .date-grid button:nth-child(7n-3) {
+  grid-column: 6;
+}
+.mercoledi .date-grid button:nth-child(7n-2) {
+  grid-column: 7;
+}
+.mercoledi .date-grid button:nth-child(7n-1) {
+  grid-column: 1;
+}
+.mercoledi .date-grid button:nth-child(7n) {
+  grid-column: 2;
+}
+
+
+
+.giovedi .date-grid button:nth-child(7n-6) {
+  grid-column: 4;
+}
+.giovedi .date-grid button:nth-child(7n-5) {
+  grid-column: 5 ;
+}
+.giovedi .date-grid button:nth-child(7n-4) {
+  grid-column: 6;
+}
+.giovedi .date-grid button:nth-child(7n-3) {
+  grid-column: 7;
+}
+.giovedi .date-grid button:nth-child(7n-2) {
+  grid-column: 1;
+}
+.giovedi .date-grid button:nth-child(7n-1) {
+  grid-column: 2;
+}
+.giovedi .date-grid button:nth-child(7n) {
+  grid-column: 3;
+}
+
+
+
+.venerdi .date-grid button:nth-child(7n-6) {
+  grid-column: 5;
+}
+.venerdi .date-grid button:nth-child(7n-5) {
+  grid-column: 6 ;
+}
+.venerdi .date-grid button:nth-child(7n-4) {
+  grid-column: 7;
+}
+.venerdi .date-grid button:nth-child(7n-3) {
+  grid-column: 1;
+}
+.venerdi .date-grid button:nth-child(7n-2) {
+  grid-column: 2;
+}
+.venerdi .date-grid button:nth-child(7n-1) {
+  grid-column: 3;
+}
+.venerdi .date-grid button:nth-child(7n) {
+  grid-column: 4;
+}
+
+
+
+
+.sabato .date-grid button:nth-child(7n-6) {
+  grid-column: 6;
+}
+.sabato .date-grid button:nth-child(7n-5) {
+  grid-column: 7;
+}
+.sabato .date-grid button:nth-child(7n-4) {
+  grid-column: 1;
+}
+.sabato .date-grid button:nth-child(7n-3) {
+  grid-column: 2;
+}
+.sabato .date-grid button:nth-child(7n-2) {
+  grid-column: 3;
+}
+.sabato .date-grid button:nth-child(7n-1) {
+  grid-column: 4;
+}
+.sabato .date-grid button:nth-child(7n) {
+  grid-column: 5;
+}
+
+.domenica .date-grid button:nth-child(7n-6) {
+  grid-column: 7;
+}
+.domenica .date-grid button:nth-child(7n-5) {
+  grid-column: 1 ;
+}
+.domenica .date-grid button:nth-child(7n-4) {
+  grid-column: 2;
+}
+.domenica .date-grid button:nth-child(7n-3) {
+  grid-column: 3;
+}
+.domenica .date-grid button:nth-child(7n-2) {
+  grid-column: 4;
+}
+.domenica .date-grid button:nth-child(7n-1) {
+  grid-column: 5;
+}
+.domenica .date-grid button:nth-child(7n) {
+  grid-column: 6;
+}
+</style>
+  <main>
+    <div id="sidebar">
+      <a class="monthButton" id="January" href="#january">
+        January
+      </a>
+      <a class="monthButton" id="February" href="#february">
+        February
+      </a>
+      <a class="monthButton" id="March" href="#march">
+        March
+      </a>
+      <a class="monthButton" id="April" href="#april">
+        April
+      </a>
+      <a class="monthButton" id="May" href="#may">
+        May
+      </a>
+    <a class="monthButton" id="June" href="#june">
+        June
+      </a>
+      <a class="monthButton" id="July" href="#july" >
+        July
+      </a>
+      <a class="monthButton" id="August" href="#august">
+        August
+      </a>
+      <a class="monthButton" id="September" href="#september">
+        August
+      </a>
+      <a class="monthButton" id="October" href="#october">
+        October
+      </a>
+      <a class="monthButton" id="November" href="#november">
+        November
+      </a>
+      <a class="monthButton" id="December" href="#december">
+        December
+      </a>
+    </div>
+    <div class="calendar">
+      <div class="lunedi">
+      <div class="month" id="January">
+        <a id="january">
+        <div class="month-indicator">
+        <time datetime="2024-03"> January 2024 </time>
+        </div>
+      <div class="day-of-week">
+        <div>Su</div>
+        <div>Mo</div>
+        <div>Tu</div>
+        <div>We</div>
+        <div>Th</div>
+        <div>Fr</div>
+        <div>Sa</div>
+      </div>
+      <div class="date-grid">
+        <button>
+          <time datetime="2024-03-01">1</time>
+        </button>
+        <button>
+          <time datetime="2024-03-02">2</time>
+        </button>
+        <button>
+          <time datetime="2024-03-03">3</time>
+        </button>
+        <button>
+          <time datetime="2024-03-04">4</time>
+        </button>
+        <button>
+          <time datetime="2024-03-05">5</time>
+        </button>
+        <button>
+          <time datetime="2024-03-06">6</time>
+        </button>
+        <button>
+          <time datetime="2024-03-07">7</time>
+        </button>
+        <button>
+          <time datetime="2024-03-08">8</time>
+        </button>
+        <button>
+          <time datetime="2024-03-09">9</time>
+        </button>
+        <button>
+          <time datetime="2024-03-10">10</time>
+        </button>
+        <button>
+          <time datetime="2024-03-11">11</time>
+        </button>
+        <button>
+          <time datetime="2024-03-12">12</time>
+        </button>
+        <button>
+          <time datetime="2024-03-13">13</time>
+        </button>
+        <button>
+          <time datetime="2024-03-14">14</time>
+        </button>
+        <button>
+          <time datetime="2024-03-15">15</time>
+        </button>
+        <button>
+          <time datetime="2024-03-16">16</time>
+        </button>
+        <button>
+          <time datetime="2024-03-17">17</time>
+        </button>
+        <button>
+          <time datetime="2024-03-18">18</time>
+        </button>
+        <button>
+          <time datetime="2024-03-19">19</time>
+        </button>
+        <button>
+          <time datetime="2024-03-20">20</time>
+        </button>
+        <button>
+          <time datetime="2024-03-21">21</time>
+        </button>
+        <button>
+          <time datetime="2024-03-22">22</time>
+        </button>
+        <button>
+          <time datetime="2024-03-23">23</time>
+        </button>
+        <button>
+          <time datetime="2024-03-24">24</time>
+        </button>
+        <button>
+          <time datetime="2024-03-25">25</time>
+        </button>
+        <button>
+          <time datetime="2024-03-26">26</time>
+        </button>
+        <button>
+          <time datetime="2024-03-27">27</time>
+        </button>
+        <button>
+          <time datetime="2024-03-28">28</time>
+        </button>
+        <button>
+          <time datetime="2024-03-29">29</time>
+        </button>
+        <button>
+          <time datetime="2024-03-30">30</time>
+        </button>
+        <button>
+          <time datetime="2024-03-31">31</time>
+        </button>
+      </div>
+    </div>
+    </div>
+    <div class="giovedi">
+      <div class="month" id="February">
+        <a id="february">
+        <div class="month-indicator">
+        <time datetime="2024-03"> February 2024 </time>
+      </div>
+      <div class="day-of-week">
+        <div>Su</div>
+        <div>Mo</div>
+        <div>Tu</div>
+        <div>We</div>
+        <div>Th</div>
+        <div>Fr</div>
+        <div>Sa</div>
+      </div>
+      <div class="date-grid">
+        <button>
+          <time datetime="2024-03-01">1</time>
+        </button>
+        <button>
+          <time datetime="2024-03-02">2</time>
+        </button>
+        <button>
+          <time datetime="2024-03-03">3</time>
+        </button>
+        <button>
+          <time datetime="2024-03-04">4</time>
+        </button>
+        <button>
+          <time datetime="2024-03-05">5</time>
+        </button>
+        <button>
+          <time datetime="2024-03-06">6</time>
+        </button>
+        <button>
+          <time datetime="2024-03-07">7</time>
+        </button>
+        <button>
+          <time datetime="2024-03-08">8</time>
+        </button>
+        <button>
+          <time datetime="2024-03-09">9</time>
+        </button>
+        <button>
+          <time datetime="2024-03-10">10</time>
+        </button>
+        <button>
+          <time datetime="2024-03-11">11</time>
+        </button>
+        <button>
+          <time datetime="2024-03-12">12</time>
+        </button>
+        <button>
+          <time datetime="2024-03-13">13</time>
+        </button>
+        <button>
+          <time datetime="2024-03-14">14</time>
+        </button>
+        <button>
+          <time datetime="2024-03-15">15</time>
+        </button>
+        <button>
+          <time datetime="2024-03-16">16</time>
+        </button>
+        <button>
+          <time datetime="2024-03-17">17</time>
+        </button>
+        <button>
+          <time datetime="2024-03-18">18</time>
+        </button>
+        <button>
+          <time datetime="2024-03-19">19</time>
+        </button>
+        <button>
+          <time datetime="2024-03-20">20</time>
+        </button>
+        <button>
+          <time datetime="2024-03-21">21</time>
+        </button>
+        <button>
+          <time datetime="2024-03-22">22</time>
+        </button>
+        <button>
+          <time datetime="2024-03-23">23</time>
+        </button>
+        <button>
+          <time datetime="2024-03-24">24</time>
+        </button>
+        <button>
+          <time datetime="2024-03-25">25</time>
+        </button>
+        <button>
+          <time datetime="2024-03-26">26</time>
+        </button>
+        <button>
+          <time datetime="2024-03-27">27</time>
+        </button>
+        <button>
+          <time datetime="2024-03-28">28</time>
+        </button>
+        <button>
+          <time datetime="2024-03-29">29</time>
+        </button>
+        <button>
+          <time datetime="2024-03-30">30</time>
+        </button>
+        <button>
+          <time datetime="2024-03-31">31</time>
+        </button>
+      </div>
+    </div>
+    <div class="month venerdi " id="march">
+      <a id="march">
+        <div class="month-indicator">
+        <time datetime="2024-03"> March 2024 </time>
+      </div>
+      <div class="day-of-week">
+        <div>Su</div>
+        <div>Mo</div>
+        <div>Tu</div>
+        <div>We</div>
+        <div>Th</div>
+        <div>Fr</div>
+        <div>Sa</div>
+      </div>
+      <div class="date-grid">
+        <button>
+          <time datetime="2024-03-01">1</time>
+        </button>
+        <button>
+          <time datetime="2024-03-02">2</time>
+        </button>
+        <button>
+          <time datetime="2024-03-03">3</time>
+        </button>
+        <button>
+          <time datetime="2024-03-04">4</time>
+        </button>
+        <button>
+          <time datetime="2024-03-05">5</time>
+        </button>
+        <button>
+          <time datetime="2024-03-06">6</time>
+        </button>
+        <button>
+          <time datetime="2024-03-07">7</time>
+        </button>
+        <button>
+          <time datetime="2024-03-08">8</time>
+        </button>
+        <button>
+          <time datetime="2024-03-09">9</time>
+        </button>
+        <button>
+          <time datetime="2024-03-10">10</time>
+        </button>
+        <button>
+          <time datetime="2024-03-11">11</time>
+        </button>
+        <button>
+          <time datetime="2024-03-12">12</time>
+        </button>
+        <button>
+          <time datetime="2024-03-13">13</time>
+        </button>
+        <button>
+          <time datetime="2024-03-14">14</time>
+        </button>
+        <button>
+          <time datetime="2024-03-15">15</time>
+        </button>
+        <button>
+          <time datetime="2024-03-16">16</time>
+        </button>
+        <button>
+          <time datetime="2024-03-17">17</time>
+        </button>
+        <button>
+          <time datetime="2024-03-18">18</time>
+        </button>
+        <button>
+          <time datetime="2024-03-19">19</time>
+        </button>
+        <button>
+          <time datetime="2024-03-20">20</time>
+        </button>
+        <button>
+          <time datetime="2024-03-21">21</time>
+        </button>
+        <button>
+          <time datetime="2024-03-22">22</time>
+        </button>
+        <button>
+          <time datetime="2024-03-23">23</time>
+        </button>
+        <button>
+          <time datetime="2024-03-24">24</time>
+        </button>
+        <button>
+          <time datetime="2024-03-25">25</time>
+        </button>
+        <button>
+          <time datetime="2024-03-26">26</time>
+        </button>
+        <button>
+          <time datetime="2024-03-27">27</time>
+        </button>
+        <button>
+          <time datetime="2024-03-28">28</time>
+        </button>
+        <button>
+          <time datetime="2024-03-29">29</time>
+        </button>
+        <button>
+          <time datetime="2024-03-30">30</time>
+        </button>
+        <button>
+          <time datetime="2024-03-31">31</time>
+        </button>
+      </div>
+    </div>
+  </div>
+  <div class="lunedi">
+    <div class="month" id="April">
+      <a id="april">
+        <div class="month-indicator">
+        <time datetime="2024-03"> April 2024 </time>
+      </div>
+      <div class="day-of-week">
+        <div>Su</div>
+        <div>Mo</div>
+        <div>Tu</div>
+        <div>We</div>
+        <div>Th</div>
+        <div>Fr</div>
+        <div>Sa</div>
+      </div>
+      <div class="date-grid">
+        <button>
+          <time datetime="2024-03-01">1</time>
+        </button>
+        <button>
+          <time datetime="2024-03-02">2</time>
+        </button>
+        <button>
+          <time datetime="2024-03-03">3</time>
+        </button>
+        <button>
+          <time datetime="2024-03-04">4</time>
+        </button>
+        <button>
+          <time datetime="2024-03-05">5</time>
+        </button>
+        <button>
+          <time datetime="2024-03-06">6</time>
+        </button>
+        <button>
+          <time datetime="2024-03-07">7</time>
+        </button>
+        <button>
+          <time datetime="2024-03-08">8</time>
+        </button>
+        <button>
+          <time datetime="2024-03-09">9</time>
+        </button>
+        <button>
+          <time datetime="2024-03-10">10</time>
+        </button>
+        <button>
+          <time datetime="2024-03-11">11</time>
+        </button>
+        <button>
+          <time datetime="2024-03-12">12</time>
+        </button>
+        <button>
+          <time datetime="2024-03-13">13</time>
+        </button>
+        <button>
+          <time datetime="2024-03-14">14</time>
+        </button>
+        <button>
+          <time datetime="2024-03-15">15</time>
+        </button>
+        <button>
+          <time datetime="2024-03-16">16</time>
+        </button>
+        <button>
+          <time datetime="2024-03-17">17</time>
+        </button>
+        <button>
+          <time datetime="2024-03-18">18</time>
+        </button>
+        <button>
+          <time datetime="2024-03-19">19</time>
+        </button>
+        <button>
+          <time datetime="2024-03-20">20</time>
+        </button>
+        <button>
+          <time datetime="2024-03-21">21</time>
+        </button>
+        <button>
+          <time datetime="2024-03-22">22</time>
+        </button>
+        <button>
+          <time datetime="2024-03-23">23</time>
+        </button>
+        <button>
+          <time datetime="2024-03-24">24</time>
+        </button>
+        <button>
+          <time datetime="2024-03-25">25</time>
+        </button>
+        <button>
+          <time datetime="2024-03-26">26</time>
+        </button>
+        <button>
+          <time datetime="2024-03-27">27</time>
+        </button>
+        <button>
+          <time datetime="2024-03-28">28</time>
+        </button>
+        <button>
+          <time datetime="2024-03-29">29</time>
+        </button>
+        <button>
+          <time datetime="2024-03-30">30</time>
+        </button>
+        <button>
+          <time datetime="2024-03-31">31</time>
+        </button>
+      </div>
+      </div>
+    </div>
+    <div class="mercoledi">
+      <div class="month" id="May">
+      <a id="may">
+        <div class="month-indicator">
+        <time datetime="2024-03"> May 2024 </time>
+      </div>
+      <div class="day-of-week">
+        <div>Su</div>
+        <div>Mo</div>
+        <div>Tu</div>
+        <div>We</div>
+        <div>Th</div>
+        <div>Fr</div>
+        <div>Sa</div>
+      </div>
+      <div class="date-grid">
+        <button>
+          <time datetime="2024-03-01">1</time>
+        </button>
+        <button>
+          <time datetime="2024-03-02">2</time>
+        </button>
+        <button>
+          <time datetime="2024-03-03">3</time>
+        </button>
+        <button>
+          <time datetime="2024-03-04">4</time>
+        </button>
+        <button>
+          <time datetime="2024-03-05">5</time>
+        </button>
+        <button>
+          <time datetime="2024-03-06">6</time>
+        </button>
+        <button>
+          <time datetime="2024-03-07">7</time>
+        </button>
+        <button>
+          <time datetime="2024-03-08">8</time>
+        </button>
+        <button>
+          <time datetime="2024-03-09">9</time>
+        </button>
+        <button>
+          <time datetime="2024-03-10">10</time>
+        </button>
+        <button>
+          <time datetime="2024-03-11">11</time>
+        </button>
+        <button>
+          <time datetime="2024-03-12">12</time>
+        </button>
+        <button>
+          <time datetime="2024-03-13">13</time>
+        </button>
+        <button>
+          <time datetime="2024-03-14">14</time>
+        </button>
+        <button>
+          <time datetime="2024-03-15">15</time>
+        </button>
+        <button>
+          <time datetime="2024-03-16">16</time>
+        </button>
+        <button>
+          <time datetime="2024-03-17">17</time>
+        </button>
+        <button>
+          <time datetime="2024-03-18">18</time>
+        </button>
+        <button>
+          <time datetime="2024-03-19">19</time>
+        </button>
+        <button>
+          <time datetime="2024-03-20">20</time>
+        </button>
+        <button>
+          <time datetime="2024-03-21">21</time>
+        </button>
+        <button>
+          <time datetime="2024-03-22">22</time>
+        </button>
+        <button>
+          <time datetime="2024-03-23">23</time>
+        </button>
+        <button>
+          <time datetime="2024-03-24">24</time>
+        </button>
+        <button>
+          <time datetime="2024-03-25">25</time>
+        </button>
+        <button>
+          <time datetime="2024-03-26">26</time>
+        </button>
+        <button>
+          <time datetime="2024-03-27">27</time>
+        </button>
+        <button>
+          <time datetime="2024-03-28">28</time>
+        </button>
+        <button>
+          <time datetime="2024-03-29">29</time>
+        </button>
+        <button>
+          <time datetime="2024-03-30">30</time>
+        </button>
+        <button>
+          <time datetime="2024-03-31">31</time>
+        </button>
+      </div>
+    </div>
+    </div>
+    <div class="sabato">
+      <div class="month" id="June">
+        <a id="june">
+        <div class="month-indicator">
+        <time datetime="2024-03"> June 2024 </time>
+      </div>
+      <div class="day-of-week">
+        <div>Su</div>
+        <div>Mo</div>
+        <div>Tu</div>
+        <div>We</div>
+        <div>Th</div>
+        <div>Fr</div>
+        <div>Sa</div>
+      </div>
+      <div class="date-grid">
+        <button>
+          <time datetime="2024-03-01">1</time>
+        </button>
+        <button>
+          <time datetime="2024-03-02">2</time>
+        </button>
+        <button>
+          <time datetime="2024-03-03">3</time>
+        </button>
+        <button>
+          <time datetime="2024-03-04">4</time>
+        </button>
+        <button>
+          <time datetime="2024-03-05">5</time>
+        </button>
+        <button>
+          <time datetime="2024-03-06">6</time>
+        </button>
+        <button>
+          <time datetime="2024-03-07">7</time>
+        </button>
+        <button>
+          <time datetime="2024-03-08">8</time>
+        </button>
+        <button>
+          <time datetime="2024-03-09">9</time>
+        </button>
+        <button>
+          <time datetime="2024-03-10">10</time>
+        </button>
+        <button>
+          <time datetime="2024-03-11">11</time>
+        </button>
+        <button>
+          <time datetime="2024-03-12">12</time>
+        </button>
+        <button>
+          <time datetime="2024-03-13">13</time>
+        </button>
+        <button>
+          <time datetime="2024-03-14">14</time>
+        </button>
+        <button>
+          <time datetime="2024-03-15">15</time>
+        </button>
+        <button>
+          <time datetime="2024-03-16">16</time>
+        </button>
+        <button>
+          <time datetime="2024-03-17">17</time>
+        </button>
+        <button>
+          <time datetime="2024-03-18">18</time>
+        </button>
+        <button>
+          <time datetime="2024-03-19">19</time>
+        </button>
+        <button>
+          <time datetime="2024-03-20">20</time>
+        </button>
+        <button>
+          <time datetime="2024-03-21">21</time>
+        </button>
+        <button>
+          <time datetime="2024-03-22">22</time>
+        </button>
+        <button>
+          <time datetime="2024-03-23">23</time>
+        </button>
+        <button>
+          <time datetime="2024-03-24">24</time>
+        </button>
+        <button>
+          <time datetime="2024-03-25">25</time>
+        </button>
+        <button>
+          <time datetime="2024-03-26">26</time>
+        </button>
+        <button>
+          <time datetime="2024-03-27">27</time>
+        </button>
+        <button>
+          <time datetime="2024-03-28">28</time>
+        </button>
+        <button>
+          <time datetime="2024-03-29">29</time>
+        </button>
+        <button>
+          <time datetime="2024-03-30">30</time>
+        </button>
+        <button>
+          <time datetime="2024-03-31">31</time>
+        </button>
+      </div>
+    </div>
+    </div>
+    <div class="mercoledi">
+      <div class="month" id="July">
+        <a id="july">
+        <div class="month-indicator">
+        <time datetime="2024-03"> July 2024 </time>
+      </div>
+      <div class="day-of-week">
+        <div>Su</div>
+        <div>Mo</div>
+        <div>Tu</div>
+        <div>We</div>
+        <div>Th</div>
+        <div>Fr</div>
+        <div>Sa</div>
+      </div>
+      <div class="date-grid">
+        <button>
+          <time datetime="2024-03-01">1</time>
+        </button>
+        <button>
+          <time datetime="2024-03-02">2</time>
+        </button>
+        <button>
+          <time datetime="2024-03-03">3</time>
+        </button>
+        <button>
+          <time datetime="2024-03-04">4</time>
+        </button>
+        <button>
+          <time datetime="2024-03-05">5</time>
+        </button>
+        <button>
+          <time datetime="2024-03-06">6</time>
+        </button>
+        <button>
+          <time datetime="2024-03-07">7</time>
+        </button>
+        <button>
+          <time datetime="2024-03-08">8</time>
+        </button>
+        <button>
+          <time datetime="2024-03-09">9</time>
+        </button>
+        <button>
+          <time datetime="2024-03-10">10</time>
+        </button>
+        <button>
+          <time datetime="2024-03-11">11</time>
+        </button>
+        <button>
+          <time datetime="2024-03-12">12</time>
+        </button>
+        <button>
+          <time datetime="2024-03-13">13</time>
+        </button>
+        <button>
+          <time datetime="2024-03-14">14</time>
+        </button>
+        <button>
+          <time datetime="2024-03-15">15</time>
+        </button>
+        <button>
+          <time datetime="2024-03-16">16</time>
+        </button>
+        <button>
+          <time datetime="2024-03-17">17</time>
+        </button>
+        <button>
+          <time datetime="2024-03-18">18</time>
+        </button>
+        <button>
+          <time datetime="2024-03-19">19</time>
+        </button>
+        <button>
+          <time datetime="2024-03-20">20</time>
+        </button>
+        <button>
+          <time datetime="2024-03-21">21</time>
+        </button>
+        <button>
+          <time datetime="2024-03-22">22</time>
+        </button>
+        <button>
+          <time datetime="2024-03-23">23</time>
+        </button>
+        <button>
+          <time datetime="2024-03-24">24</time>
+        </button>
+        <button>
+          <time datetime="2024-03-25">25</time>
+        </button>
+        <button>
+          <time datetime="2024-03-26">26</time>
+        </button>
+        <button>
+          <time datetime="2024-03-27">27</time>
+        </button>
+        <button>
+          <time datetime="2024-03-28">28</time>
+        </button>
+        <button>
+          <time datetime="2024-03-29">29</time>
+        </button>
+        <button>
+          <time datetime="2024-03-30">30</time>
+        </button>
+        <button>
+          <time datetime="2024-03-31">31</time>
+        </button>
+      </div>
+    </div>
+    </div>
+    <div class="giovedi">
+      <div class="month" id="August">
+        <a id="august">
+        <div class="month-indicator">
+        <time datetime="2024-03"> August 2024 </time>
+      </div>
+      <div class="day-of-week">
+        <div>Su</div>
+        <div>Mo</div>
+        <div>Tu</div>
+        <div>We</div>
+        <div>Th</div>
+        <div>Fr</div>
+        <div>Sa</div>
+      </div>
+      <div class="date-grid">
+        <button>
+          <time datetime="2024-03-01">1</time>
+        </button>
+        <button>
+          <time datetime="2024-03-02">2</time>
+        </button>
+        <button>
+          <time datetime="2024-03-03">3</time>
+        </button>
+        <button>
+          <time datetime="2024-03-04">4</time>
+        </button>
+        <button>
+          <time datetime="2024-03-05">5</time>
+        </button>
+        <button>
+          <time datetime="2024-03-06">6</time>
+        </button>
+        <button>
+          <time datetime="2024-03-07">7</time>
+        </button>
+        <button>
+          <time datetime="2024-03-08">8</time>
+        </button>
+        <button>
+          <time datetime="2024-03-09">9</time>
+        </button>
+        <button>
+          <time datetime="2024-03-10">10</time>
+        </button>
+        <button>
+          <time datetime="2024-03-11">11</time>
+        </button>
+        <button>
+          <time datetime="2024-03-12">12</time>
+        </button>
+        <button>
+          <time datetime="2024-03-13">13</time>
+        </button>
+        <button>
+          <time datetime="2024-03-14">14</time>
+        </button>
+        <button>
+          <time datetime="2024-03-15">15</time>
+        </button>
+        <button>
+          <time datetime="2024-03-16">16</time>
+        </button>
+        <button>
+          <time datetime="2024-03-17">17</time>
+        </button>
+        <button>
+          <time datetime="2024-03-18">18</time>
+        </button>
+        <button>
+          <time datetime="2024-03-19">19</time>
+        </button>
+        <button>
+          <time datetime="2024-03-20">20</time>
+        </button>
+        <button>
+          <time datetime="2024-03-21">21</time>
+        </button>
+        <button>
+          <time datetime="2024-03-22">22</time>
+        </button>
+        <button>
+          <time datetime="2024-03-23">23</time>
+        </button>
+        <button>
+          <time datetime="2024-03-24">24</time>
+        </button>
+        <button>
+          <time datetime="2024-03-25">25</time>
+        </button>
+        <button>
+          <time datetime="2024-03-26">26</time>
+        </button>
+        <button>
+          <time datetime="2024-03-27">27</time>
+        </button>
+        <button>
+          <time datetime="2024-03-28">28</time>
+        </button>
+        <button>
+          <time datetime="2024-03-29">29</time>
+        </button>
+        <button>
+          <time datetime="2024-03-30">30</time>
+        </button>
+        <button>
+          <time datetime="2024-03-31">31</time>
+        </button>
+      </div>
+    </div>
+    </div>
+    <div class="domenica">
+      <div class="month" id="September">
+        <a id="september">
+        <div class="month-indicator">
+        <time datetime="2024-03"> September 2024 </time>
+      </div>
+      <div class="day-of-week">
+        <div>Su</div>
+        <div>Mo</div>
+        <div>Tu</div>
+        <div>We</div>
+        <div>Th</div>
+        <div>Fr</div>
+        <div>Sa</div>
+      </div>
+      <div class="date-grid">
+        <button>
+          <time datetime="2024-03-01">1</time>
+        </button>
+        <button>
+          <time datetime="2024-03-02">2</time>
+        </button>
+        <button>
+          <time datetime="2024-03-03">3</time>
+        </button>
+        <button>
+          <time datetime="2024-03-04">4</time>
+        </button>
+        <button>
+          <time datetime="2024-03-05">5</time>
+        </button>
+        <button>
+          <time datetime="2024-03-06">6</time>
+        </button>
+        <button>
+          <time datetime="2024-03-07">7</time>
+        </button>
+        <button>
+          <time datetime="2024-03-08">8</time>
+        </button>
+        <button>
+          <time datetime="2024-03-09">9</time>
+        </button>
+        <button>
+          <time datetime="2024-03-10">10</time>
+        </button>
+        <button>
+          <time datetime="2024-03-11">11</time>
+        </button>
+        <button>
+          <time datetime="2024-03-12">12</time>
+        </button>
+        <button>
+          <time datetime="2024-03-13">13</time>
+        </button>
+        <button>
+          <time datetime="2024-03-14">14</time>
+        </button>
+        <button>
+          <time datetime="2024-03-15">15</time>
+        </button>
+        <button>
+          <time datetime="2024-03-16">16</time>
+        </button>
+        <button>
+          <time datetime="2024-03-17">17</time>
+        </button>
+        <button>
+          <time datetime="2024-03-18">18</time>
+        </button>
+        <button>
+          <time datetime="2024-03-19">19</time>
+        </button>
+        <button>
+          <time datetime="2024-03-20">20</time>
+        </button>
+        <button>
+          <time datetime="2024-03-21">21</time>
+        </button>
+        <button>
+          <time datetime="2024-03-22">22</time>
+        </button>
+        <button>
+          <time datetime="2024-03-23">23</time>
+        </button>
+        <button>
+          <time datetime="2024-03-24">24</time>
+        </button>
+        <button>
+          <time datetime="2024-03-25">25</time>
+        </button>
+        <button>
+          <time datetime="2024-03-26">26</time>
+        </button>
+        <button>
+          <time datetime="2024-03-27">27</time>
+        </button>
+        <button>
+          <time datetime="2024-03-28">28</time>
+        </button>
+        <button>
+          <time datetime="2024-03-29">29</time>
+        </button>
+        <button>
+          <time datetime="2024-03-30">30</time>
+        </button>
+        <button>
+          <time datetime="2024-03-31">31</time>
+        </button>
+      </div>
+    </div>
+    </div>
+    <div class="martedi">
+      <div class="month" id="October">
+        <a id="october">
+        <div class="month-indicator">
+        <time datetime="2024-03"> October 2024 </time>
+      </div>
+      <div class="day-of-week">
+        <div>Su</div>
+        <div>Mo</div>
+        <div>Tu</div>
+        <div>We</div>
+        <div>Th</div>
+        <div>Fr</div>
+        <div>Sa</div>
+      </div>
+      <div class="date-grid">
+        <button>
+          <time datetime="2024-03-01">1</time>
+        </button>
+        <button>
+          <time datetime="2024-03-02">2</time>
+        </button>
+        <button>
+          <time datetime="2024-03-03">3</time>
+        </button>
+        <button>
+          <time datetime="2024-03-04">4</time>
+        </button>
+        <button>
+          <time datetime="2024-03-05">5</time>
+        </button>
+        <button>
+          <time datetime="2024-03-06">6</time>
+        </button>
+        <button>
+          <time datetime="2024-03-07">7</time>
+        </button>
+        <button>
+          <time datetime="2024-03-08">8</time>
+        </button>
+        <button>
+          <time datetime="2024-03-09">9</time>
+        </button>
+        <button>
+          <time datetime="2024-03-10">10</time>
+        </button>
+        <button>
+          <time datetime="2024-03-11">11</time>
+        </button>
+        <button>
+          <time datetime="2024-03-12">12</time>
+        </button>
+        <button>
+          <time datetime="2024-03-13">13</time>
+        </button>
+        <button>
+          <time datetime="2024-03-14">14</time>
+        </button>
+        <button>
+          <time datetime="2024-03-15">15</time>
+        </button>
+        <button>
+          <time datetime="2024-03-16">16</time>
+        </button>
+        <button>
+          <time datetime="2024-03-17">17</time>
+        </button>
+        <button>
+          <time datetime="2024-03-18">18</time>
+        </button>
+        <button>
+          <time datetime="2024-03-19">19</time>
+        </button>
+        <button>
+          <time datetime="2024-03-20">20</time>
+        </button>
+        <button>
+          <time datetime="2024-03-21">21</time>
+        </button>
+        <button>
+          <time datetime="2024-03-22">22</time>
+        </button>
+        <button>
+          <time datetime="2024-03-23">23</time>
+        </button>
+        <button>
+          <time datetime="2024-03-24">24</time>
+        </button>
+        <button>
+          <time datetime="2024-03-25">25</time>
+        </button>
+        <button>
+          <time datetime="2024-03-26">26</time>
+        </button>
+        <button>
+          <time datetime="2024-03-27">27</time>
+        </button>
+        <button>
+          <time datetime="2024-03-28">28</time>
+        </button>
+        <button>
+          <time datetime="2024-03-29">29</time>
+        </button>
+        <button>
+          <time datetime="2024-03-30">30</time>
+        </button>
+        <button>
+          <time datetime="2024-03-31">31</time>
+        </button>
+      </div>
+      </div>
+      </div>
+      <div class="venerdi">
+      <div class="month" id="November">
+        <a id="november">
+        <div class="month-indicator">
+        <time datetime="2024-03"> November 2024 </time>
+      </div>
+      <div class="day-of-week">
+        <div>Su</div>
+        <div>Mo</div>
+        <div>Tu</div>
+        <div>We</div>
+        <div>Th</div>
+        <div>Fr</div>
+        <div>Sa</div>
+      </div>
+      <div class="date-grid">
+        <button>
+          <time datetime="2024-03-01">1</time>
+        </button>
+        <button>
+          <time datetime="2024-03-02">2</time>
+        </button>
+        <button>
+          <time datetime="2024-03-03">3</time>
+        </button>
+        <button>
+          <time datetime="2024-03-04">4</time>
+        </button>
+        <button>
+          <time datetime="2024-03-05">5</time>
+        </button>
+        <button>
+          <time datetime="2024-03-06">6</time>
+        </button>
+        <button>
+          <time datetime="2024-03-07">7</time>
+        </button>
+        <button>
+          <time datetime="2024-03-08">8</time>
+        </button>
+        <button>
+          <time datetime="2024-03-09">9</time>
+        </button>
+        <button>
+          <time datetime="2024-03-10">10</time>
+        </button>
+        <button>
+          <time datetime="2024-03-11">11</time>
+        </button>
+        <button>
+          <time datetime="2024-03-12">12</time>
+        </button>
+        <button>
+          <time datetime="2024-03-13">13</time>
+        </button>
+        <button>
+          <time datetime="2024-03-14">14</time>
+        </button>
+        <button>
+          <time datetime="2024-03-15">15</time>
+        </button>
+        <button>
+          <time datetime="2024-03-16">16</time>
+        </button>
+        <button>
+          <time datetime="2024-03-17">17</time>
+        </button>
+        <button>
+          <time datetime="2024-03-18">18</time>
+        </button>
+        <button>
+          <time datetime="2024-03-19">19</time>
+        </button>
+        <button>
+          <time datetime="2024-03-20">20</time>
+        </button>
+        <button>
+          <time datetime="2024-03-21">21</time>
+        </button>
+        <button>
+          <time datetime="2024-03-22">22</time>
+        </button>
+        <button>
+          <time datetime="2024-03-23">23</time>
+        </button>
+        <button>
+          <time datetime="2024-03-24">24</time>
+        </button>
+        <button>
+          <time datetime="2024-03-25">25</time>
+        </button>
+        <button>
+          <time datetime="2024-03-26">26</time>
+        </button>
+        <button>
+          <time datetime="2024-03-27">27</time>
+        </button>
+        <button>
+          <time datetime="2024-03-28">28</time>
+        </button>
+        <button>
+          <time datetime="2024-03-29">29</time>
+        </button>
+        <button>
+          <time datetime="2024-03-30">30</time>
+        </button>
+        <button>
+          <time datetime="2024-03-31">31</time>
+        </button>
+      </div>
+    </div>
+    </div>
+    <div class="domenica">
+      <div class="month" id="December">
+        <a id="december">
+        <div class="month-indicator">
+        <time datetime="2024-03"> December 2024 </time>
+      </div>
+      <div class="day-of-week">
+        <div>Su</div>
+        <div>Mo</div>
+        <div>Tu</div>
+        <div>We</div>
+        <div>Th</div>
+        <div>Fr</div>
+        <div>Sa</div>
+      </div>
+      <div class="date-grid">
+        <button>
+          <time datetime="2024-03-01">1</time>
+        </button>
+        <button>
+          <time datetime="2024-03-02">2</time>
+        </button>
+        <button>
+          <time datetime="2024-03-03">3</time>
+        </button>
+        <button>
+          <time datetime="2024-03-04">4</time>
+        </button>
+        <button>
+          <time datetime="2024-03-05">5</time>
+        </button>
+        <button>
+          <time datetime="2024-03-06">6</time>
+        </button>
+        <button>
+          <time datetime="2024-03-07">7</time>
+        </button>
+        <button>
+          <time datetime="2024-03-08">8</time>
+        </button>
+        <button>
+          <time datetime="2024-03-09">9</time>
+        </button>
+        <button>
+          <time datetime="2024-03-10">10</time>
+        </button>
+        <button>
+          <time datetime="2024-03-11">11</time>
+        </button>
+        <button>
+          <time datetime="2024-03-12">12</time>
+        </button>
+        <button>
+          <time datetime="2024-03-13">13</time>
+        </button>
+        <button>
+          <time datetime="2024-03-14">14</time>
+        </button>
+        <button>
+          <time datetime="2024-03-15">15</time>
+        </button>
+        <button>
+          <time datetime="2024-03-16">16</time>
+        </button>
+        <button>
+          <time datetime="2024-03-17">17</time>
+        </button>
+        <button>
+          <time datetime="2024-03-18">18</time>
+        </button>
+        <button>
+          <time datetime="2024-03-19">19</time>
+        </button>
+        <button>
+          <time datetime="2024-03-20">20</time>
+        </button>
+        <button>
+          <time datetime="2024-03-21">21</time>
+        </button>
+        <button>
+          <time datetime="2024-03-22">22</time>
+        </button>
+        <button>
+          <time datetime="2024-03-23">23</time>
+        </button>
+        <button>
+          <time datetime="2024-03-24">24</time>
+        </button>
+        <button>
+          <time datetime="2024-03-25">25</time>
+        </button>
+        <button>
+          <time datetime="2024-03-26">26</time>
+        </button>
+        <button>
+          <time datetime="2024-03-27">27</time>
+        </button>
+        <button>
+          <time datetime="2024-03-28">28</time>
+        </button>
+        <button>
+          <time datetime="2024-03-29">29</time>
+        </button>
+        <button>
+          <time datetime="2024-03-30">30</time>
+        </button>
+        <button>
+          <time datetime="2024-03-31">31</time>
+        </button>
+      </div>
+    </div>
+    </div>
+      </div>
+      </div>
+  </main>
+  </div>
+</body>
+</html>
