@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pomodoro Study Timer</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    flex-direction: column;
+    z-index: 2;
+    overflow: hidden;
+
+  }
+  #studyForm {
+    position: relative;
+    z-index: 10; /* Ensure the form appears above the blob */
+  }
+
+  #clock {
+    width: 200px;
+    height: 200px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 20px;
+  }
+
+  .timer {
+    font-size: 2em;
+    z-index: 1;
+    color: black;
+  }
+
+  .blob {
+    width: 300px; /* Larghezza del div .blob */
+    height: 300px; /* Altezza del div .blob */
+    margin: 10% auto; /* Margini: 10% sopra e sotto, centrato orizzontalmente */
+    position: relative; /* Posizionamento relativo: utilizzato per posizionare gli pseudo-elementi ::before e ::after rispetto a questo elemento */
+    color: #fff; /* Colore del testo all'interno del div */
+    display: flex; /* Display flex per centrare il contenuto (testo o altro) all'interno del div */
+    justify-content: center; /* Allinea orizzontalmente il contenuto al centro */
+    align-items: center; /* Allinea verticalmente il contenuto al centro */
+    z-index: 0; /* Livello z-index, determina l'ordine di sovrapposizione degli elementi */
+  }
+  
+  .blob::before{
+    transform: translate(-50%, -50%);
+    content: ''; /* Necessario per rendere visibile lo pseudo-elemento, anche se non contiene testo */
+    border: 2px solid #fff; /* Bordo dello pseudo-elemento */
+    border-radius: 58% 42% 48% 53% / 47% 60% 36% 53%; /* Raggio del bordo per creare forme organiche/irregolari */
+    width: 100%; /* Larghezza: occupa tutto lo spazio disponibile nel contenitore .blob */
+    height: 100%; /* Altezza: occupa tutto lo spazio disponibile nel contenitore .blob */
+    position: absolute; /* Posizionamento assoluto: posizionato rispetto al primo antenato posizionato (in questo caso .blob) */
+    left: 50%; /* Allineato a sinistra del contenitore .blob */
+    top: 50%; /* Allineato in alto del contenitore .blob */
+    animation-fill-mode: forwards; /* Mantiene lo stile dell'ultimo frame dell'animazione dopo che è finita */
+  }
+
+  /*https://css-tricks.com/almanac/selectors/a/after-and-before/*/
+  
+  .blob::after{
+    transform: translate(-50%, -50%);
+    content: ''; /* Analogamente a ::before, rende visibile lo pseudo-elemento */
+    border: 2px solid #fff; /* Bordo dello pseudo-elemento */
+    border-radius: 48% 42% 48% 53% / 47% 60% 36% 53%; /* Raggio del bordo per creare forme diverse rispetto a ::before */
+    width: 100%; /* Larghezza come ::before */
+    height: 100%; /* Altezza come ::before */
+    background: rgba(244, 166, 166, 0.1); /* Sfondo leggermente trasparente per differenziarlo da ::before */
+    position: absolute; /* Posizionamento assoluto come ::before */
+    left: 50%; /* Allineato a sinistra come ::before */
+    top: 50%; /* Allineato in alto come ::before */
+    animation-fill-mode: forwards; /* Mantiene lo stile dell'ultimo frame dell'animazione come ::before */
+  }
+  @keyframes scale {
+    0% {
+      width: 20vw;
+      height: 20vw;
+    }
+    50% {
+      width  : 40vw;
+      height: 40vw;
+    }
+    100% {
+      width : 80vw;
+      height: 80vw;
+    }
+  }
+  @keyframes rotate {
+    0% {
+      transform: translate(-50%, -50%) rotate(0deg);
+      border-color: #EC0D0D;
+    }
+    50% {
+      transform: translate(-50%, -50%) rotate(360deg); /* Adjust the scale value at 50% as needed */
+      border-color: #f4c01c;
+    }
+    100% {
+      transform: translate(-50%, -50%) rotate(360deg); /* Keep rotation the same as at 50% */
+      border-color: #EC0D0D;
+    }
+  }
+</style>
+  <style id="mystyle">
+
+  </style>
+</head>
+<body>
+
+  <form id="studyForm">
+    <label for="repetition">Enter repetition time:</label>
+    <input type="number" id="repetition" name="studyTime" min="1" required>
+    <br>
+    <label for="studyTime">Enter study time in minutes:</label>
+    <input type="number" id="studyTime" name="studyTime" min="1" required>
+    <br>
+    <label for="pauseTime">Enter Pause time in minutes:</label>
+    <input type="number" id="pauseTime" name="studyTime" min="1" required>
+    <br>
+    <button type="submit">Start Studying</button>
+  </form>
+  
+  <div id="clock" class="blob">
+    <div class="timer" id="timerDisplay">00:00</div>
+    <div class="timer" id="timerDisplayPause">00:00</div>
+  </div>
+  
+  <script>
+// Aggiunge un listener per l'evento di submit al form con id 'studyForm'
+document.getElementById('studyForm').addEventListener('submit', function(event) {
+  // Previene il comportamento di default dell'evento, che sarebbe il submit del form
+  event.preventDefault();
+
+  // Ottiene il tempo di studio inserito dall'utente e lo converte in un numero intero
+  const studyTime = parseInt(document.getElementById('studyTime').value, 10);
+  const pauseTime = parseInt(document.getElementById('pauseTime').value, 10);
+  // Converte i minuti in secondi per l'animazione
+  const animationDuration = studyTime * 60; 
+
+  // Imposta l'animazione con durata dinamica per gli pseudo-elementi ::before e ::after
+  const styleSheet = document.createElement("style");
+  styleSheet.innerText += `.blob::before {animation : scale ${animationDuration}s linear forwards, rotate ${animationDuration}s linear forwards, bolle1 20s ease-in-out alternate;animation-iteration-count: infinite}\n`;
+  styleSheet.innerText += `.blob::after {animation: scale ${animationDuration}s linear forwards, rotate ${animationDuration/2}s linear forwards, bolle2 20s ease-in-out alternate;animation-iteration-count: infinite}\n`;
+  // Aggiunge il foglio di stile creato all'elemento head del documento
+  document.head.appendChild(styleSheet);
+
+  // Calcola il tempo di fine aggiungendo la durata del timer al tempo corrente
+  var style = document.createElement('style');
+  style.innerHTML = "@keyframes bolle1 {\n" +
+          "0%{\n" +
+          "borderr-adius: " + ((Math.random()*100)%70+30) + "%" + ((Math.random()*100)%70+30) + "%" + ((Math.random()*100)%70+30) + "%" + ((Math.random()*100)%70+30) + "%" + "/" + ((Math.random()*100)%70+30) + "%" + ((Math.random()*100)%70+30) + "%" + ((Math.random()*100)%70+30) + "%" + ((Math.random()*100)%70+30) + "%\n" +
+  "}\n" +
+  "50%{\n" +
+  "border-radius: " + ((Math.random()*100)%70+30) + "%" + ((Math.random()*100)%70+30) + "%" + ((Math.random()*100)%70+30) + "%" + ((Math.random()*100)%70+30) + "%" + "/" + ((Math.random()*100)%70+30) + "%" + ((Math.random()*100)%70+30) + "%" + ((Math.random()*100)%70+30) + "%" + ((Math.random()*100)%70+30) + "%\n" +
+  "}\n" +
+  "100%{\n" +
+  "border-radius: " + ((Math.random()*100)%70+30) + "%" + ((Math.random()*100)%70+30) + "%" + ((Math.random()*100)%70+30) + "%" + ((Math.random()*100)%70+30) + "%" + "/" + ((Math.random()*100)%70+30) + "%" + ((Math.random()*100)%70+30) + "%" + ((Math.random()*100)%70+30) + "%" + ((Math.random()*100)%70+30) + "%\n" +
+  "}\n" +
+  "}\n" + "@keyframes bolle2 {\n" +
+  "0%{\n" +
+  "border-radius: " + ((Math.random()*100)%70+30) + "%" + ((Math.random()*100)%70+30) + "%" + ((Math.random()*100)%70+30) + "%" + ((Math.random()*100)%70+30) + "%" + "/" + ((Math.random()*100)%70+30) + "%" + ((Math.random()*100)%70+30) + "%" + ((Math.random()*100)%70+30) + "%" + ((Math.random()*100)%70+30) + "%\n" +
+  "}\n" +
+  "50%{\n" +
+  "border-radius: " + ((Math.random()*100)%70+30) + "%" + ((Math.random()*100)%70+30) + "%" + ((Math.random()*100)%70+30) + "%" + ((Math.random()*100)%70+30) + "%" + "/" + ((Math.random()*100)%70+30) + "%" + ((Math.random()*100)%70+30) + "%" + ((Math.random()*100)%70+30) + "%" + ((Math.random()*100)%70+30) + "%\n" +
+  "}\n" +
+  "100%{\n" +
+  "border-radius: " + ((Math.random()*100)%70+30) + "%" + ((Math.random()*100)%70+30) + "%" + ((Math.random()*100)%70+30) + "%" + ((Math.random()*100)%70+30) + "%" + "/" + ((Math.random()*100)%70+30) + "%" + ((Math.random()*100)%70+30) + "%" + ((Math.random()*100)%70+30) + "%" + ((Math.random()*100)%70+30) + "%\n" +
+  "}\n" +
+  "}\n";
+  document.getElementsByTagName('head')[0].appendChild(style);
+  // Imposta un intervallo che si ripete ogni secondo
+  const repetition = parseInt(document.getElementById('repetition').value, 10);
+  u();
+  for(i = 0; i < repetition-1; i++) {
+    setTimeout(u, studyTime * 60000 + pauseTime * 60000);
+  }
+  function u () {
+    const endTime = Date.now() + studyTime * 60000;
+    const endTime1 = Date.now() + studyTime * 60000 + pauseTime * 60000;
+    const interval = setInterval(function () {
+      const now = Date.now();
+      // Calcola la differenza tra il tempo di fine e il tempo corrente
+      const difference = endTime - now;
+
+      // Se la differenza è minore o uguale a 0, ferma l'intervallo
+      if (difference <= 0) {
+        clearInterval(interval);
+        // Pulisce il testo dell'elemento con id 'timerDisplay'
+        document.getElementById('timerDisplay').textContent = "00:00";
+        const interval2 = setInterval(function () {
+          const now = Date.now();
+          // Calcola la differenza tra il tempo di fine e il tempo corrente
+          const difference = endTime1 - now;
+
+          // Se la differenza è minore o uguale a 0, ferma l'intervallo
+          if (difference <= 0) {
+            clearInterval(interval2);
+            document.getElementById('timerDisplayPause').textContent = "00:00";
+            // Pulisce il testo dell'elemento con id 'timerDisplay'
+            return;
+          }
+
+          // Calcola i minuti e i secondi rimanenti
+          const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
+          const seconds = Math.floor((difference % (1000 * 60)) / 1000);
+
+          // Visualizza il tempo rimanente nell'elemento con id 'timerDisplay'
+          //padstart aggiunge uno zero prima della stringa se non raggiunge almeno una lunghezza di 2
+          document.getElementById('timerDisplayPause').textContent = `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+        }, 1000);
+        return
+      }
+
+      // Calcola i minuti e i secondi rimanenti
+      const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((difference % (1000 * 60)) / 1000);
+
+      // Visualizza il tempo rimanente nell'elemento con id 'timerDisplay'
+      //padstart aggiunge uno zero prima della stringa se non raggiunge almeno una lunghezza di 2
+      document.getElementById('timerDisplay').textContent = `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+    }, 1000);
+  }
+});
+    
+  </script>
+  
+  </body>
+  </html>
